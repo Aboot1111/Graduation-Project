@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>طلبات الصيانة</title>
+    <style>
+        body {
+            font-family: 'Tajawal', sans-serif;
+            text-align: center;
+            background: url('maintenance_background.jpg') no-repeat center center fixed;
+            background-size: cover;
+            margin: 0;
+            padding: 0;
+            color: white;
+        }
+        .container {
+            margin-top: 50px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 30px;
+            border-radius: 10px;
+            display: inline-block;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            width: 80%;
+        }
+        .title {
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid white;
+        }
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #007bff;
+        }
+        .pending {
+            background-color: #ffc107;
+            color: black;
+        }
+        .completed {
+            background-color: #28a745;
+        }
+        .nav {
+            margin-top: 20px;
+        }
+        .nav a {
+            text-decoration: none;
+            color: white;
+            background-color: #007bff;
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin: 5px;
+            display: inline-block;
+        }
+        .nav a:hover {
+            background-color: #0056b3;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">طلبات الصيانة</h1>
+        <table>
+            <tr>
+                <th>رقم الجهاز</th>
+                <th>المشكلة</th>
+                <th>حالة الطلب</th>
+            </tr>
+            <tr>
+                <td>12345</td>
+                <td>مشكلة برمجية</td>
+                <td class="pending">جاري التنفيذ</td>
+            </tr>
+            <tr>
+                <td>67890</td>
+                <td>مشكلة في العتاد</td>
+                <td class="completed">تم الإصلاح</td>
+            </tr>
+        </table>
+        <div class="nav">
+            <a href="index.html">الصفحة الرئيسية</a>
+            <a href="login.html">تسجيل الدخول</a>
+            <a href="maintenance_request.html">طلب صيانة</a>
+            <a href="maintenance_status.html">حالة الصيانة</a>
+        </div>
+    </div>
+</body>
+</html>
