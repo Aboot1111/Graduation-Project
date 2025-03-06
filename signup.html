@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>إنشاء حساب</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="project.css/signup.css">  
+  
+</head>
+
+<body>
+
+  <div class="card">
+    <h5 class="card-title"><i class="fas fa-user-plus"></i> إنشاء الحساب</h5>
+    <form id="registrationForm">
+      <div class="form-group">
+        <label for="name"><i class="fas fa-user"></i> اسم المتدرب أو المدرب رباعي</label>
+        <input type="text" class="form-control" id="name" placeholder="اسمك رباعي" required>
+      </div>
+
+      <center>
+        <p><i class="fas fa-user-tag"></i> هل هو مدرب أو متدرب؟</p>
+        <div class="radio-group">
+          <label><input type="radio" name="role" value="مدرب" required> مدرب</label>
+          <label><input type="radio" name="role" value="متدرب" required> متدرب</label>
+        </div>
+      </center>
+
+      <div class="form-group">
+        <label for="email"><i class="fas fa-envelope"></i> إيميلك الشخصي</label>
+        <input type="email" class="form-control" id="email" placeholder="إيميلك" required>
+      </div>
+      <div class="form-group">
+        <label for="password"><i class="fas fa-lock"></i> كلمة المرور</label>
+        <input type="password" class="form-control" id="password" placeholder="كلمة المرور" required>
+      </div>
+      <div class="form-group">
+        <label for="confirmPassword"><i class="fas fa-lock"></i> تأكيد كلمة المرور</label>
+        <input type="password" class="form-control" id="confirmPassword" placeholder="تأكيد كلمة المرور" required>
+      </div>
+      <button type="submit" class="btn btn-primary"><i class="fas fa-user-check"></i> إنشاء الحساب</button>
+      <div id="errorMessage" class="alert alert-danger mt-3" role="alert"></div>
+    </form>
+  </div>
+
+</body>
+
+</html>
