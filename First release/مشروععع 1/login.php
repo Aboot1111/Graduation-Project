@@ -1,8 +1,48 @@
+<?php
+session_start();
+$ms = "";
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    include 'conn.php';
+
+    $uname = $_POST['username'];
+    $pass = $_POST['password'];
+
+    $sql = "SELECT * FROM user WHERE Email='$uname'";
+    $query = $conn->query($sql);
+
+    if ($query->num_rows == 1) {
+        $user = $query->fetch_assoc();
+
+        // التحقق من كلمة المرور
+        if (password_verify($pass, $user['Password'])) {
+            $_SESSION['Name'] = $user['Name'];
+            $_SESSION['Email'] = $user['Email'];
+            $_SESSION['Role'] = $user['Role'];
+            $_SESSION['UserID'] = $user['UserID']; // ✅ هذا هو المفتاح
+
+            // التوجيه حسب الدور
+            if ($user['Role'] == 1) {
+                header("Location: user_home.php");
+            } elseif ($user['Role'] == 0) {
+                header("Location: admin_home.php");
+            }
+            exit();
+        } else {
+            $ms = "كلمة المرور غير صحيحة!";
+        }
+    } else {
+        $ms = "البريد الإلكتروني غير موجود!";
+    }
+
+    $conn->close();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="ar">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>تسجيل الدخول - صيانة أجهزة الكلية</title>
     <style>
         body {
@@ -21,18 +61,12 @@
             border-radius: 10px;
             display: inline-block;
             box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
-            animation: fadeIn 1s ease-in-out;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
         }
         .title {
             font-size: 30px;
             font-weight: bold;
             margin-bottom: 20px;
             color: #ffcc00;
-            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
         }
         .form-group {
             margin: 15px 0;
@@ -49,11 +83,6 @@
             background: linear-gradient(45deg, #007bff, #0056b3);
             color: white;
             cursor: pointer;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-        button:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
         }
         .nav {
             margin-top: 20px;
@@ -62,15 +91,15 @@
             text-decoration: none;
             color: white;
             background: linear-gradient(45deg, #ff5722, #e64a19);
-            padding: 12px 20px;
-            border-radius: 10px;
-            margin: 5px;
-            display: inline-block;
-            transition: transform 0.3s, box-shadow 0.3s;
+            padding: 10px 15px;
+            border-radius: 8px;
         }
-        .nav a:hover {
-            transform: scale(1.1);
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+        .alert {
+            background-color: #dc3545;
+            color: white;
+            padding: 10px;
+            margin-top: 15px;
+            border-radius: 5px;
         }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;700&display=swap" rel="stylesheet">
@@ -78,21 +107,24 @@
 <body>
     <div class="container">
         <h1 class="title">تسجيل الدخول</h1>
-        <form action="maintenance_request.html" method="post">
+        <form method="post">
             <div class="form-group">
-                <label for="username">اسم المستخدم:</label>
+                <label for="username">البريد الإلكتروني:</label>
                 <input type="text" id="username" name="username" required>
             </div>
             <div class="form-group">
                 <label for="password">كلمة المرور:</label>
                 <input type="password" id="password" name="password" required>
             </div>
-            <button type="submit">تسجيل الدخول</button>
+            <button type="submit" name="submit">تسجيل الدخول</button>
+
+            <?php if (!empty($ms)): ?>
+                <div class="alert"><?php echo $ms; ?></div>
+            <?php endif; ?>
         </form>
-        <div class="nav">
-            <a href="index.html">الصفحة الرئيسية</a>
-            <a href="maintenance_request.html">طلب صيانة</a>
-            <a href="maintenance_status.html">حالة الصيانة</a>
+
+        <div class="nav mt-4">
+            <p>ليس لديك حساب؟ <a href="signup.php">إنشاء حساب جديد</a></p>
         </div>
     </div>
 </body>
