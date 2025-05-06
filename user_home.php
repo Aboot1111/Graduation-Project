@@ -22,35 +22,47 @@ if ($_SESSION['Role'] != 1) {
             text-align: center;
             margin: 0;
             padding: 0;
+            min-height: 100vh;
         }
         .container {
-            margin-top: 100px;
+            padding-top: 100px;
+            padding-bottom: 50px;
         }
         h1 {
             color: #ffc107;
+            margin-bottom: 40px;
         }
         .btn {
             display: inline-block;
-            margin: 20px;
+            margin: 15px;
             padding: 15px 30px;
             font-size: 18px;
-            background: #03a9f4;
+            background: #4CAF50;
             border: none;
             border-radius: 10px;
             text-decoration: none;
             color: white;
             transition: 0.3s;
+            min-width: 250px;
         }
         .btn:hover {
-            background: #0288d1;
+            background: #388E3C;
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>مرحباً بك <?= $_SESSION['FirstName'] . ' ' . $_SESSION['LastName'] ?></h1>
-        <a class="btn" href="maintenance1_request.php">طلب صيانة جهاز</a>
-        <a class="btn" href="upkeep.php">عرض حاله طلباتي</a>
+        <h1>مرحباً بك في نظام صيانة أجهزة الكلية</h1>
+        <div>
+            <a class="btn" href="maintenance1_request.php">
+                <i class="fas fa-plus-circle"></i> إنشاء طلب صيانة جديد
+            </a>
+            <a class="btn" href="upkeep.php">
+                <i class="fas fa-history"></i> عرض طلباتي السابقة
+            </a>
+        </div>
     </div>
 </body>
 </html>

@@ -1,7 +1,7 @@
 <?php
-if (session_status() === PHP_SESSION_NONE) session_start();
+session_start();
 include 'conn.php';
-$ms = "";
+$error = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = $conn->real_escape_string($_POST['email']);
@@ -19,15 +19,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['LastName'] = $user['LastName'];
             $_SESSION['Email'] = $user['Email'];
             $_SESSION['Role'] = $user['Role'];
-            $_SESSION['image'] = $user['image'];
             
             header("Location: " . ($user['Role'] == 0 ? "admin_home.php" : "user_home.php"));
             exit();
         } else {
-            $ms = "كلمة المرور غير صحيحة!";
+            $error = "كلمة المرور غير صحيحة!";
         }
     } else {
-        $ms = "البريد الإلكتروني غير مسجل!";
+        $error = "البريد الإلكتروني غير مسجل!";
     }
     $conn->close();
 }
@@ -40,25 +39,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>تسجيل الدخول</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="css/login.css">
     <style>
         body {
             background: linear-gradient(135deg, #1e3c72, #2a5298);
             font-family: 'Tajawal', sans-serif;
+            height: 100vh;
         }
         .card {
-            width: 100%;
-            max-width: 500px;
             border-radius: 15px;
             box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-        }
-        .card-title {
-            color: #1e3c72;
-            font-weight: bold;
-        }
-        .btn-primary {
-            background: linear-gradient(45deg, #1e3c72, #2a5298);
         }
         .input-icon {
             position: relative;
@@ -75,24 +64,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     </style>
 </head>
-<body class="d-flex justify-content-center align-items-center min-vh-100">
-    <div class="card">
-        <h5 class="card-title text-center p-3"><i class="fas fa-sign-in-alt"></i> تسجيل الدخول</h5>
+<body class="d-flex justify-content-center align-items-center">
+    <div class="card col-md-5 mx-3">
+        <div class="card-header bg-primary text-white text-center py-3">
+            <h5><i class="fas fa-sign-in-alt"></i> تسجيل الدخول</h5>
+        </div>
         <div class="card-body">
+            <?php if (!empty($error)): ?>
+                <div class="alert alert-danger text-center"><?= $error ?></div>
+            <?php endif; ?>
+            
             <form method="POST">
                 <div class="mb-3 input-icon">
-                    <i class="fas fa-envelope"></i>
+                    <i class="fas fa-envelope text-primary"></i>
                     <input type="email" class="form-control" name="email" placeholder="البريد الإلكتروني" required>
                 </div>
+                
                 <div class="mb-3 input-icon">
-                    <i class="fas fa-lock"></i>
+                    <i class="fas fa-lock text-primary"></i>
                     <input type="password" class="form-control" name="password" placeholder="كلمة المرور" required>
                 </div>
-                <button type="submit" class="btn btn-primary w-100"><i class="fas fa-sign-in-alt"></i> دخول</button>
                 
-                <?php if (!empty($ms)): ?>
-                <div class="alert alert-danger mt-3 text-center"><?= $ms ?></div>
-                <?php endif; ?>
+                <button type="submit" class="btn btn-primary w-100 py-2">
+                    <i class="fas fa-sign-in-alt"></i> دخول
+                </button>
             </form>
             
             <div class="text-center mt-4">
@@ -100,7 +95,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
         </div>
     </div>
-
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

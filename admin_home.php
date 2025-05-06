@@ -22,16 +22,19 @@ if ($_SESSION['Role'] != 0) {
             text-align: center;
             margin: 0;
             padding: 0;
+            min-height: 100vh;
         }
         .container {
-            margin-top: 100px;
+            padding-top: 100px;
+            padding-bottom: 50px;
         }
         h1 {
             color: #ffc107;
+            margin-bottom: 40px;
         }
         .btn {
             display: inline-block;
-            margin: 20px;
+            margin: 15px;
             padding: 15px 30px;
             font-size: 18px;
             background: #ff9800;
@@ -40,17 +43,26 @@ if ($_SESSION['Role'] != 0) {
             text-decoration: none;
             color: white;
             transition: 0.3s;
+            min-width: 250px;
         }
         .btn:hover {
             background: #e65100;
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
         }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>لوحة تحكم فني الصيانة في الكلية</h1>
-        <a class="btn" href="upkeep.php">عرض جميع طلبات الصيانة</a>
-        <a class="btn" href="maintenance1_request.php">ارسال طلب صيانة</a>
+        <div>
+            <a class="btn" href="upkeep.php">
+                <i class="fas fa-tools"></i> عرض جميع طلبات الصيانة
+            </a>
+            <a class="btn" href="maintenance1_request.php">
+                <i class="fas fa-plus-circle"></i> إرسال طلب صيانة
+            </a>
+        </div>
     </div>
 </body>
 </html>

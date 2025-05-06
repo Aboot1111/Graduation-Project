@@ -1,26 +1,28 @@
 <?php
-if (session_status() === PHP_SESSION_NONE) session_start();
+session_start();
 include 'conn.php';
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_SESSION['Role'] == 0) {
+if (!isset($_SESSION['Role']) || $_SESSION['Role'] != 0) {
+    header("Location: login.php");
+    exit();
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $requestID = (int)$_POST['request_id'];
     $status = $conn->real_escape_string($_POST['status']);
     
-    $dateResolved = ($status == 'تم الإصلاح') ? ", DateResolved = CURDATE()" : 
-                   (($status == 'تم الإلغاء') ? ", DateResolved = NULL" : "");
+    $sql = "UPDATE maintenance_requset SET Status = ? WHERE RequsetID = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("si", $status, $requestID);
     
-    $sql = "UPDATE maintenance_requset 
-            SET Status = '$status' $dateResolved
-            WHERE RequsetID = $requestID";
-    
-    if ($conn->query($sql)) {
+    if ($stmt->execute()) {
         header("Location: upkeep.php?updated=1");
     } else {
         header("Location: upkeep.php?updated=0");
     }
+    $stmt->close();
 } else {
-    header("Location: login.php");
+    header("Location: upkeep.php");
 }
 $conn->close();
-exit();
 ?>
